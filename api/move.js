@@ -1,7 +1,7 @@
-import { getRoom, setRoom } from './kv.js';
-import { checkMove } from './puzzle.js';
+const { getRoom, setRoom } = require('./kv');
+const { checkMove } = require('./puzzle');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   const { code, row, col, num, slot } = req.body || {};
@@ -14,14 +14,12 @@ export default async function handler(req, res) {
     return res.status(404).json({ error: 'Room not found' });
   }
 
-  // Can't modify given cells
   if (room.puzzle[row][col] !== 0) {
     return res.status(400).json({ error: 'Cannot modify given cell' });
   }
 
   const key = `${row},${col}`;
 
-  // Erase (num=0)
   if (num === 0) {
     delete room.filled[key];
     room.winner = null;
@@ -32,7 +30,6 @@ export default async function handler(req, res) {
   const correct = checkMove(room.solution, row, col, num);
   room.filled[key] = { num, player: slot, ts: Date.now(), correct };
 
-  // Check win: all non-puzzle cells filled correctly
   let done = true;
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
@@ -63,4 +60,4 @@ export default async function handler(req, res) {
     status: room.status,
     winner: room.winner,
   });
-}
+};

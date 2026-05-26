@@ -3,5 +3,7 @@
   "version": "9.0.0",
   "description": "Cooperative Sudoku - Vercel serverless + Vercel KV",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@vercel/kv": "^2.0.0"
+  }
 }

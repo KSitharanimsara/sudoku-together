@@ -1,7 +1,7 @@
-import { getRoom, setRoom } from './kv.js';
-import { generatePuzzle } from './puzzle.js';
+const { getRoom, setRoom } = require('./kv');
+const { generatePuzzle } = require('./puzzle');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   const { code, slot } = req.body || {};
@@ -16,12 +16,10 @@ export default async function handler(req, res) {
 
   if (!room.restartRequested) room.restartRequested = [];
 
-  // If first player requests, notify other
   if (!room.restartRequested.includes(slot)) {
     room.restartRequested.push(slot);
     await setRoom(code.toUpperCase(), room);
 
-    // If both requested, reset game
     if (room.restartRequested.length >= 2) {
       const { puzzle, solution } = generatePuzzle();
       room.puzzle = puzzle;
@@ -48,4 +46,4 @@ export default async function handler(req, res) {
     chat: room.chat,
     restartRequested: room.restartRequested,
   });
-}
+};

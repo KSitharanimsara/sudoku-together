@@ -1,6 +1,6 @@
-import { getRoom, setRoom } from './kv.js';
+const { getRoom, setRoom } = require('./kv');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   const { code, slot, text } = req.body || {};
@@ -26,7 +26,6 @@ export default async function handler(req, res) {
   };
 
   room.chat.push(msg);
-  // Keep last 100 messages
   if (room.chat.length > 100) {
     room.chat = room.chat.slice(-100);
   }
@@ -34,4 +33,4 @@ export default async function handler(req, res) {
   await setRoom(code.toUpperCase(), room);
 
   res.status(200).json({ ok: true, chat: room.chat });
-}
+};

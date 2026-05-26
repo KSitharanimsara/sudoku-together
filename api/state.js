@@ -1,6 +1,6 @@
-import { getRoom } from './kv.js';
+const { getRoom } = require('./kv');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   const { code } = req.query;
@@ -23,4 +23,4 @@ export default async function handler(req, res) {
     winner: room.winner,
     restartRequested: room.restartRequested || [],
   });
-}
+};

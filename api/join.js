@@ -1,7 +1,6 @@
-import { getRoom, setRoom } from './kv.js';
-import { generatePuzzle } from './puzzle.js';
+const { getRoom, setRoom } = require('./kv');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   const { code, name } = req.body || {};
@@ -14,7 +13,6 @@ export default async function handler(req, res) {
     return res.status(404).json({ error: 'Room not found' });
   }
 
-  // Assign player slot
   let slot = -1;
   if (!room.players[0]) slot = 0;
   else if (!room.players[1]) slot = 1;
@@ -41,4 +39,4 @@ export default async function handler(req, res) {
     filled: room.filled,
     chat: room.chat,
   });
-}
+};

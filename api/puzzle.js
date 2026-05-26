@@ -1,8 +1,5 @@
-// Sudoku puzzle generator — creates a valid 9x9 puzzle with unique solution
-export function generatePuzzle() {
-  // Start with a complete valid board
+function generatePuzzle() {
   const board = generateFullBoard();
-  // Remove cells to create puzzle (40 removed = medium difficulty)
   const puzzle = board.map(row => [...row]);
   const positions = [];
   for (let r = 0; r < 9; r++) {
@@ -73,7 +70,8 @@ function shuffle(arr) {
   }
 }
 
-// Check if a move is valid against the solution
-export function checkMove(solution, row, col, num) {
+function checkMove(solution, row, col, num) {
   return solution[row][col] === num;
 }
+
+module.exports = { generatePuzzle, checkMove };
