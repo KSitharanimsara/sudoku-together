@@ -1,9 +1,6 @@
 {
   "name": "sudoku-together-v9",
   "version": "9.0.0",
-  "description": "Cooperative Sudoku - Vercel serverless + Vercel KV",
-  "private": true,
-  "dependencies": {
-    "@vercel/kv": "^2.0.0"
-  }
+  "description": "Cooperative Sudoku - P2P via PeerJS, zero backend",
+  "private": true
 }
